@@ -1,0 +1,121 @@
+[
+  {
+    "objectID": "wrangling-group-summarize.html",
+    "href": "wrangling-group-summarize.html",
+    "title": "Grouping and Summarizing",
+    "section": "",
+    "text": "Let’s work with the dataset m111survey from the {bcscr} package:\n\nDT::datatable(m111survey, options = list(scrollX = TRUE))",
+    "crumbs": [
+      "Home",
+      "Wrangling",
+      "Grouping and Summarizing"
+    ]
+  },
+  {
+    "objectID": "wrangling-group-summarize.html#our-data",
+    "href": "wrangling-group-summarize.html#our-data",
+    "title": "Grouping and Summarizing",
+    "section": "",
+    "text": "Let’s work with the dataset m111survey from the {bcscr} package:\n\nDT::datatable(m111survey, options = list(scrollX = TRUE))",
+    "crumbs": [
+      "Home",
+      "Wrangling",
+      "Grouping and Summarizing"
+    ]
+  },
+  {
+    "objectID": "wrangling-group-summarize.html#setup",
+    "href": "wrangling-group-summarize.html#setup",
+    "title": "Grouping and Summarizing",
+    "section": "Setup",
+    "text": "Setup\nUse the inputs below to select a categorical variable and a numerical variable from m111survey: we’ll work with your choices for the rest of the tutorial.\n\n\n\n\n\n\n\n\n\nviewof category = Inputs.select(\n  categoricals,\n  { value: [\"seat\"], label: \"Category\" }\n);\nviewof measure = Inputs.select(\n  [ \"fastest\", \"GPA\", \"height\", \"ideal_height\", \"sleep\" ],\n  { label: \"Numerical Measure\" }\n);\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nHere’s a graphical display for your choices:\n\np &lt;- ggplot(data = m111survey, aes(x = ${category}, y = ${measure})) +\n  geom_violin(fill = \"burlywood\") +\n  geom_jitter(width = 0.25, size = 0.5) +\n  labs(title = \"Violin Studies\")\nggplotly(p)",
+    "crumbs": [
+      "Home",
+      "Wrangling",
+      "Grouping and Summarizing"
+    ]
+  },
+  {
+    "objectID": "wrangling-group-summarize.html#exercises",
+    "href": "wrangling-group-summarize.html#exercises",
+    "title": "Grouping and Summarizing",
+    "section": "Exercises",
+    "text": "Exercises\n\nComputing Groupwise Means\n\nExerciseSolution\n\n\nUse {dplyr} manipulations to compute the mean value of the measure you chose:\n\n,\n\nfor each value of\n\n.\n\nName the mean m. Your goal is the following table:\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nStart by grouping according to .\nm111survey |&gt; group_by(${category})\n\n\nAfter you have grouped, use summarize() to compute the mean within each group:\nm111survey |&gt; group_by(${category}) |&gt; \n  summarize(m = mean(${measure}))\n\n\nRemember that the na.rm = TRUE option will compute means after removing NA-values:\nm111survey |&gt; group_by(${category}) |&gt; \n  summarize(m = mean(${measure}, na.rm = TRUE))\n\n\n\nm111survey |&gt; group_by(${category}) |&gt; \n  summarize(m = mean(${measure}))\n\n\n\n\n\n\n\n\n\n\n\n\n\nCounting Groups\nEarlier you chose the categorical variable . The following bar graph offers a visualization of the relative sizes of the groups formed by the values of this variable:\n\nggplot(m111survey, aes(x = ${category})) +\n  geom_bar(\n      fill = \"skyblue\", \n      color = \"black\"\n  )\n\n\n\n\n\n\n\n\n\n\nExerciseSolution\n\n\nUse {dplyr} manipulations to compute the sizes of the sub-groups formed by breaking down the groups formed by the values of .\nName the column of group-sizes size. Your goal is the following table:\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nStart by grouping according to the :\nm111survey |&gt; group_by(${category})\n\n\nWhen you summarize, use the function n() to count the number of rows in each group.\n\n\n\nm111survey |&gt;\n  group_by(${category}) |&gt; \n  summarize(size = n())\n\n\n\n\n\n\n\n\nOf course, count() is a shortcut:\nm111survey |&gt;\n  count(${category})\n\n\n\n\n\n\n\n\n\n\n\n\n\nGroups and Subgroups\nPick a second categorical variable, different than the one you have already chosen:\n\ncatLeft = {\n  const newArray = categoricals.filter(item =&gt; item !== category);\n  return(newArray);\n}\n\n\n\n\n\n\n\nviewof category2 = Inputs.select(\n  catLeft,\n  { value: catLeft[0], label: \"Second Category\" }\n);\n\n\n\n\n\n\nHere is a visualization of the different groups according to\n\n,\n\nbroken into subgroups by the values of :\n\nggplot(m111survey, aes(x = ${category})) +\n  geom_bar(\n      aes(fill = ${category2}), \n      color = \"black\",\n      position = \"dodge\"\n  )\n\n\n\n\n\n\n\n\n\n\nExerciseSolution\n\n\nUse {dplyr} manipulations to compute the sizes of the sub-groups formed by breaking down the groups formed by the values of:\n\n,\n\nby each value of\n\n.\n\nName the column of group-sizes size. Your goal is the following table:\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nStart by grouping according to the first category and then the second one:\nm111survey |&gt; group_by(${category}, ${category2})\n\n\nWhen you summarize, use the function n() to count the number of rows in each group.\n\n\n\nm111survey |&gt;\n  group_by(${category}, ${category2}) |&gt; \n  summarize(size = n())\n\n\n\n\n\n\n\n\nOf course, count() is a shortcut:\nm111survey |&gt;\n  count(${category}, ${category2})",
+    "crumbs": [
+      "Home",
+      "Wrangling",
+      "Grouping and Summarizing"
+    ]
+  },
+  {
+    "objectID": "modelling-summary.html",
+    "href": "modelling-summary.html",
+    "title": "Modelling",
+    "section": "",
+    "text": "TODO",
+    "crumbs": [
+      "Home",
+      "Modelling"
+    ]
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "TODO"
+  },
+  {
+    "objectID": "visualization-summary.html",
+    "href": "visualization-summary.html",
+    "title": "Visualization",
+    "section": "",
+    "text": "TODO",
+    "crumbs": [
+      "Home",
+      "Visualization"
+    ]
+  },
+  {
+    "objectID": "modelling.html",
+    "href": "modelling.html",
+    "title": "Quantitative Explanatory Variables",
+    "section": "",
+    "text": "TODO",
+    "crumbs": [
+      "Home",
+      "Modelling",
+      "Quantitative Explanatory Variables"
+    ]
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Welcome to Live Learning!",
+    "section": "",
+    "text": "TODO"
+  },
+  {
+    "objectID": "visualization.html",
+    "href": "visualization.html",
+    "title": "Visualizing with {ggplot2}",
+    "section": "",
+    "text": "TODO",
+    "crumbs": [
+      "Home",
+      "Visualization",
+      "Visualizing with {ggplot2}"
+    ]
+  },
+  {
+    "objectID": "wrangling-summary.html",
+    "href": "wrangling-summary.html",
+    "title": "Wrangling",
+    "section": "",
+    "text": "TODO",
+    "crumbs": [
+      "Home",
+      "Wrangling"
+    ]
+  }
+]

@@ -1,0 +1,4 @@
+- source: project
+  quarto-pub:
+    - id: dbfb430c-f31c-4101-a546-7312d1c68f71
+      url: https://homer.quarto.pub/live-learning

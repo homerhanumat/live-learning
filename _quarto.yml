@@ -1,0 +1,35 @@
+project:
+  type: website
+
+website:
+  title: "Live Learning"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - about.qmd
+  sidebar:
+    style: "docked"
+    contents:
+      - section: "Visualization"
+        href: visualization-summary.qmd
+        contents:
+          - visualization.qmd
+      - section: "Wrangling"
+        href: wrangling-summary.qmd
+        contents:
+          - wrangling-group-summarize.qmd
+      - section: "Modelling"
+        href: modelling-summary.qmd
+        contents:
+          - modelling.qmd
+
+format:
+  html:
+    theme: sandstone
+    css: styles.css
+    toc: true
+    link-external-newwindow: true
+
+
+

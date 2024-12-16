@@ -1,0 +1,9 @@
+/* css styles */
+
+#quarto-document-content a:hover {
+  background-color: cyan;
+}
+
+#quarto-document-content a:link {
+  text-decoration: underline;
+}

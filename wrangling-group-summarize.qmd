@@ -1,0 +1,479 @@
+---
+title: Grouping and Summarizing
+engine: knitr
+format: 
+  live-html:
+    theme: sandstone
+    css: styles.css
+    toc: true
+    toc-expand: true
+    link-external-newwindow: true
+
+webr:
+  packages:
+    - dplyr
+    - ggplot2
+    - plotly
+    - bcscr
+  repos:
+    - https://homerhanumat.r-universe.dev
+---
+
+{{< include ./_extensions/r-wasm/live/_knitr.qmd >}}
+
+```{r include = FALSE}
+library(bcscr)
+```
+
+
+## Our Data
+
+Let's work with the dataset [m111survey](https://homerhanumat.github.io/bcscr/reference/m111survey.html) from the {bcscr} package:
+
+```{r}
+DT::datatable(m111survey, options = list(scrollX = TRUE))
+```
+
+## Setup
+
+
+Use the inputs below to select a categorical variable and a numerical variable from `m111survey`:  we'll work with your choices for the rest of the tutorial.
+
+```{webr}
+#| echo: false
+#| define:
+#|   - categoricals
+categoricals = 
+  c("sex", "seat", "weight_feel", 
+    "love_first", "extra_life", "enough_sleep"
+  )
+```
+
+
+```{ojs}
+//| echo: false
+viewof category = Inputs.select(
+  categoricals,
+  { value: ["seat"], label: "Category" }
+);
+viewof measure = Inputs.select(
+  [ "fastest", "GPA", "height", "ideal_height", "sleep" ],
+  { label: "Numerical Measure" }
+);
+```
+
+Here's a graphical display for your choices:
+
+```{r}
+#| eval: false
+p <- ggplot(data = m111survey, aes(x = ${category}, y = ${measure})) +
+  geom_violin(fill = "burlywood") +
+  geom_jitter(width = 0.25, size = 0.5) +
+  labs(title = "Violin Studies")
+ggplotly(p)
+```
+
+
+```{webr}
+#| edit: false
+#| echo: false
+#| warning: false
+#| message: false
+#| input:
+#|  - category
+#|  - measure
+p <- ggplot(data = m111survey, aes(x = .data[[category]], y = .data[[measure]])) +
+  geom_violin(fill = "burlywood") +
+  geom_jitter(width = 0.25, size = 0.5) +
+  labs(title = "Violin Studies")
+ggplotly(p)
+```
+
+## Exercises
+
+### Computing Groupwise Means
+
+
+::: {.panel-tabset}
+
+## Exercise
+
+
+
+Use {dplyr} manipulations to compute the mean value of the measure you chose:
+
+>**${measure}**,
+
+for each value of
+
+>**${category}**.
+
+Name the mean `m`. Your goal is the following table:
+
+```{webr}
+#| edit: false
+#| echo: false
+#| input:
+#|  - category
+#|  - measure
+m111survey %>%
+  group_by(.data[[category]]) %>% 
+  summarize(m = mean(.data[[measure]], na.rm = TRUE))
+```
+
+```{webr}
+#| exercise: ex1
+#| caption: Exercise 1
+#| input: 
+#|  - category
+#|  - measure
+m111survey |> ______
+```
+
+```{webr}
+#| exercise: ex1
+#| check: true
+answer <- 
+  m111survey %>%
+  group_by(.data[[category]]) %>% 
+  summarize(m = mean(.data[[measure]], na.rm = TRUE))
+if (identical(.result, answer)) {
+  list(correct = TRUE, message = "Correct!")
+} else {
+  list(correct = FALSE, message = "Incorrect.")
+}
+```
+
+::: { .hint exercise="ex1" }
+Start by grouping according to **${category}**.
+
+
+
+```r
+m111survey |> group_by(${category})
+```
+:::
+
+::: { .hint exercise="ex1" }
+After you have grouped, use `summarize()` to compute the mean within each group:
+
+```r
+m111survey |> group_by(${category}) |> 
+  summarize(m = mean(${measure}))
+```
+:::
+
+::: { .hint exercise="ex1" }
+Remember that the `na.rm = TRUE` option will compute means after removing `NA`-values:
+```r
+m111survey |> group_by(${category}) |> 
+  summarize(m = mean(${measure}, na.rm = TRUE))
+```
+:::
+
+
+## Solution
+
+```r
+m111survey |> group_by(${category}) |> 
+  summarize(m = mean(${measure}))
+```
+
+```{webr}
+#| edit: false
+#| echo: false
+#| input:
+#|  - category
+#|  - measure
+m111survey %>%
+  group_by(.data[[category]]) %>% 
+  summarize(m = mean(.data[[measure]], na.rm = TRUE))
+```
+
+
+:::
+
+### Counting Groups
+
+Earlier you chose the categorical variable **${category}**.  The following bar graph offers a visualization of the relative sizes of the groups formed by the values of this variable:
+
+```{r}
+#| eval: false
+ggplot(m111survey, aes(x = ${category})) +
+  geom_bar(
+      fill = "skyblue", 
+      color = "black"
+  )
+```
+
+
+```{webr}
+#| edit: false
+#| echo: false
+#| warning: false
+#| message: false
+#| input:
+#|  - category
+ggplot(m111survey, aes(x = .data[[category]])) +
+  geom_bar(
+      fill = "skyblue", 
+      color = "black"
+  )
+```
+
+::: {.panel-tabset}
+
+## Exercise
+
+Use {dplyr} manipulations to compute the sizes of the sub-groups formed by breaking down the groups formed by the values of **${category}**.
+
+Name the column of group-sizes `size`. Your goal is the following table:
+
+```{webr}
+#| edit: false
+#| echo: false
+#| warning: false
+#| message: false
+#| input:
+#|  - category
+m111survey %>%
+  group_by(.data[[category]]) %>% 
+  summarize(size = n())
+```
+
+```{webr}
+#| exercise: ex2
+#| caption: Exercise 2
+#| input: 
+#|  - category
+m111survey |> ______
+```
+
+```{webr}
+#| exercise: ex2
+#| check: true
+answer2 <- 
+  m111survey %>%
+  group_by(.data[[category]]) %>% 
+  summarize(size = n())
+if (identical(.result, answer2)) {
+  list(correct = TRUE, message = "Correct!")
+} else {
+  list(correct = FALSE, message = "Incorrect.")
+}
+```
+
+::: { .hint exercise="ex2" }
+
+Start by grouping according to the ${category}:
+
+
+```r
+m111survey |> group_by(${category})
+```
+:::
+
+::: { .hint exercise="ex2" }
+
+When you summarize, use the function `n()` to count the number of rows in each group.
+:::
+
+## Solution
+
+```r
+m111survey |>
+  group_by(${category}) |> 
+  summarize(size = n())
+```
+
+```{webr}
+#| edit: false
+#| echo: false
+#| warning: false
+#| message: false
+#| input:
+#|  - category
+m111survey %>%
+  group_by(.data[[category]]) %>% 
+  summarize(size = n())
+```
+
+Of course, `count()` is a shortcut:
+
+```r
+m111survey |>
+  count(${category})
+```
+
+```{webr}
+#| edit: false
+#| echo: false
+#| input:
+#|  - category
+m111survey %>%
+  count(.data[[category]])
+```
+
+:::
+
+
+### Groups and Subgroups
+
+Pick a second categorical variable, different than the one you have already chosen:
+
+
+```{ojs}
+//| echo: false
+catLeft = {
+  const newArray = categoricals.filter(item => item !== category);
+  return(newArray);
+}
+```
+
+```{ojs}
+//| echo: false
+viewof category2 = Inputs.select(
+  catLeft,
+  { value: catLeft[0], label: "Second Category" }
+);
+```
+
+Here is a visualization of the different groups according to
+
+>**${category}**, 
+
+broken into subgroups by the values of **${category2}**:
+
+```{r}
+#| eval: false
+ggplot(m111survey, aes(x = ${category})) +
+  geom_bar(
+      aes(fill = ${category2}), 
+      color = "black",
+      position = "dodge"
+  )
+```
+
+
+```{webr}
+#| edit: false
+#| echo: false
+#| warning: false
+#| message: false
+#| input:
+#|  - category
+#|  - category2
+ggplot(m111survey, aes(x = .data[[category]])) +
+  geom_bar(
+      aes(fill = .data[[category2]]), 
+      color = "black",
+      position = "dodge"
+  )
+```
+
+::: {.panel-tabset}
+
+## Exercise
+
+Use {dplyr} manipulations to compute the sizes of the sub-groups formed by breaking down the groups formed by the values of:
+
+>**${category}**,
+
+by each value of
+
+>**${category2}**.
+
+Name the column of group-sizes `size`. Your goal is the following table:
+
+```{webr}
+#| edit: false
+#| echo: false
+#| warning: false
+#| message: false
+#| input:
+#|  - category
+#|  - category2
+m111survey %>%
+  group_by(.data[[category]], .data[[category2]]) %>% 
+  summarize(size = n())
+```
+
+```{webr}
+#| exercise: ex3
+#| caption: Exercise 3
+#| input: 
+#|  - category
+#|  - category2
+m111survey |> ______
+```
+
+```{webr}
+#| exercise: ex3
+#| check: true
+answer3 <- 
+  m111survey %>%
+  group_by(.data[[category]], .data[[category2]]) %>% 
+  summarize(size = n())
+if (identical(.result, answer3)) {
+  list(correct = TRUE, message = "Correct!")
+} else {
+  list(correct = FALSE, message = "Incorrect.")
+}
+```
+
+::: { .hint exercise="ex3" }
+
+Start by grouping according to the first category and then the second one:
+
+
+```r
+m111survey |> group_by(${category}, ${category2})
+```
+:::
+
+::: { .hint exercise="ex3" }
+
+When you summarize, use the function `n()` to count the number of rows in each group.
+:::
+
+## Solution
+
+```r
+m111survey |>
+  group_by(${category}, ${category2}) |> 
+  summarize(size = n())
+```
+
+```{webr}
+#| edit: false
+#| echo: false
+#| warning: false
+#| message: false
+#| input:
+#|  - category
+#|  - category2
+m111survey %>%
+  group_by(.data[[category]], .data[[category2]]) %>% 
+  summarize(size = n())
+```
+
+Of course, `count()` is a shortcut:
+
+```r
+m111survey |>
+  count(${category}, ${category2})
+```
+
+```{webr}
+#| edit: false
+#| echo: false
+#| input:
+#|  - category
+#|  - category2
+m111survey %>%
+  count(.data[[category]], .data[[category2]])
+```
+
+:::
+
+
