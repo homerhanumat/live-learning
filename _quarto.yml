@@ -14,7 +14,7 @@ website:
       - section: "Visualization"
         href: visualization-summary.qmd
         contents:
-          - visualization.qmd
+          - visualization-basics.qmd
       - section: "Wrangling"
         href: wrangling-summary.qmd
         contents:

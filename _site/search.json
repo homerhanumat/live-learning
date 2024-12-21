@@ -1,22 +1,10 @@
 [
   {
-    "objectID": "wrangling-group-summarize.html",
-    "href": "wrangling-group-summarize.html",
-    "title": "Grouping and Summarizing",
-    "section": "",
-    "text": "Let’s work with the dataset m111survey from the {bcscr} package:\n\nDT::datatable(m111survey, options = list(scrollX = TRUE))",
-    "crumbs": [
-      "Home",
-      "Wrangling",
-      "Grouping and Summarizing"
-    ]
-  },
-  {
     "objectID": "wrangling-group-summarize.html#our-data",
     "href": "wrangling-group-summarize.html#our-data",
     "title": "Grouping and Summarizing",
-    "section": "",
-    "text": "Let’s work with the dataset m111survey from the {bcscr} package:\n\nDT::datatable(m111survey, options = list(scrollX = TRUE))",
+    "section": "Our Data",
+    "text": "Our Data\nLet’s work with the dataset m111survey from the {bcscr} package:\n\nDT::datatable(m111survey, options = list(scrollX = TRUE))",
     "crumbs": [
       "Home",
       "Wrangling",
@@ -40,7 +28,7 @@
     "href": "wrangling-group-summarize.html#exercises",
     "title": "Grouping and Summarizing",
     "section": "Exercises",
-    "text": "Exercises\n\nComputing Groupwise Means\n\nExerciseSolution\n\n\nUse {dplyr} manipulations to compute the mean value of the measure you chose:\n\n,\n\nfor each value of\n\n.\n\nName the mean m. Your goal is the following table:\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nStart by grouping according to .\nm111survey |&gt; group_by(${category})\n\n\nAfter you have grouped, use summarize() to compute the mean within each group:\nm111survey |&gt; group_by(${category}) |&gt; \n  summarize(m = mean(${measure}))\n\n\nRemember that the na.rm = TRUE option will compute means after removing NA-values:\nm111survey |&gt; group_by(${category}) |&gt; \n  summarize(m = mean(${measure}, na.rm = TRUE))\n\n\n\nm111survey |&gt; group_by(${category}) |&gt; \n  summarize(m = mean(${measure}))\n\n\n\n\n\n\n\n\n\n\n\n\n\nCounting Groups\nEarlier you chose the categorical variable . The following bar graph offers a visualization of the relative sizes of the groups formed by the values of this variable:\n\nggplot(m111survey, aes(x = ${category})) +\n  geom_bar(\n      fill = \"skyblue\", \n      color = \"black\"\n  )\n\n\n\n\n\n\n\n\n\n\nExerciseSolution\n\n\nUse {dplyr} manipulations to compute the sizes of the sub-groups formed by breaking down the groups formed by the values of .\nName the column of group-sizes size. Your goal is the following table:\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nStart by grouping according to the :\nm111survey |&gt; group_by(${category})\n\n\nWhen you summarize, use the function n() to count the number of rows in each group.\n\n\n\nm111survey |&gt;\n  group_by(${category}) |&gt; \n  summarize(size = n())\n\n\n\n\n\n\n\n\nOf course, count() is a shortcut:\nm111survey |&gt;\n  count(${category})\n\n\n\n\n\n\n\n\n\n\n\n\n\nGroups and Subgroups\nPick a second categorical variable, different than the one you have already chosen:\n\ncatLeft = {\n  const newArray = categoricals.filter(item =&gt; item !== category);\n  return(newArray);\n}\n\n\n\n\n\n\n\nviewof category2 = Inputs.select(\n  catLeft,\n  { value: catLeft[0], label: \"Second Category\" }\n);\n\n\n\n\n\n\nHere is a visualization of the different groups according to\n\n,\n\nbroken into subgroups by the values of :\n\nggplot(m111survey, aes(x = ${category})) +\n  geom_bar(\n      aes(fill = ${category2}), \n      color = \"black\",\n      position = \"dodge\"\n  )\n\n\n\n\n\n\n\n\n\n\nExerciseSolution\n\n\nUse {dplyr} manipulations to compute the sizes of the sub-groups formed by breaking down the groups formed by the values of:\n\n,\n\nby each value of\n\n.\n\nName the column of group-sizes size. Your goal is the following table:\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nStart by grouping according to the first category and then the second one:\nm111survey |&gt; group_by(${category}, ${category2})\n\n\nWhen you summarize, use the function n() to count the number of rows in each group.\n\n\n\nm111survey |&gt;\n  group_by(${category}, ${category2}) |&gt; \n  summarize(size = n())\n\n\n\n\n\n\n\n\nOf course, count() is a shortcut:\nm111survey |&gt;\n  count(${category}, ${category2})",
+    "text": "Exercises\n\nComputing Groupwise Means\n\nExerciseSolution\n\n\nUse {dplyr} manipulations to compute the mean value of the measure you chose:  for each value of . Name the mean m. Your goal is the following table:\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nStart by grouping according to .\nm111survey |&gt; group_by(${category})\n\n\nAfter you have grouped, use summarize() to compute the mean within each group:\nm111survey |&gt; group_by(${category}) |&gt; \n  summarize(m = mean(${measure}))\n\n\nRemember that the na.rm = TRUE option will compute means after removing NA-values:\nm111survey |&gt; group_by(${category}) |&gt; \n  summarize(m = mean(${measure}, na.rm = TRUE))\n\n\n\nm111survey |&gt; group_by(${category}) |&gt; \n  summarize(m = mean(${measure}))\n\n\n\n\n\n\n\n\n\n\n\n\n\nCounting Groups\nEarlier you chose the categorical variable . The following bar graph offers a visualization of the relative sizes of the groups formed by the values of this variable:\n\nggplot(m111survey, aes(x = ${category})) +\n  geom_bar(\n      fill = \"skyblue\", \n      color = \"black\"\n  )\n\n\n\n\n\n\n\n\n\n\nExerciseSolution\n\n\nUse {dplyr} manipulations to compute the sizes of the sub-groups formed by breaking down the groups formed by the values of . Name the column of group-sizes size. Your goal is the following table:\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nStart by grouping according to the :\nm111survey |&gt; group_by(${category})\n\n\nWhen you summarize, use the function n() to count the number of rows in each group.\n\n\n\nm111survey |&gt;\n  group_by(${category}) |&gt; \n  summarize(size = n())\n\n\n\n\n\n\n\n\nOf course, count() is a shortcut:\nm111survey |&gt;\n  count(${category})\n\n\n\n\n\n\n\n\n\n\n\n\n\nGroups and Subgroups\nPick a second categorical variable, different than the one you have already chosen:\n\ncatLeft = {\n  const newArray = categoricals.filter(item =&gt; item !== category);\n  return(newArray);\n}\n\n\n\n\n\n\n\nviewof category2 = Inputs.select(\n  catLeft,\n  { value: catLeft[0], label: \"Second Category\" }\n);\n\n\n\n\n\n\nHere is a visualization of the different groups according to , broken into subgroups by the values of :\n\nggplot(m111survey, aes(x = ${category})) +\n  geom_bar(\n      aes(fill = ${category2}), \n      color = \"black\",\n      position = \"dodge\"\n  )\n\n\n\n\n\n\n\n\n\n\nExerciseSolution\n\n\nUse {dplyr} manipulations to compute the sizes of the sub-groups formed by breaking down the groups formed by the values of  by each value of . Name the column of group-sizes size. Your goal is the following table:\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nStart by grouping according to  and then according to :\nm111survey |&gt; group_by(${category}, ${category2})\n\n\nWhen you summarize, use the function n() to count the number of rows in each group.\n\n\n\nm111survey |&gt;\n  group_by(${category}, ${category2}) |&gt; \n  summarize(size = n())\n\n\n\n\n\n\n\n\nOf course, count() is a shortcut:\nm111survey |&gt;\n  count(${category}, ${category2})",
     "crumbs": [
       "Home",
       "Wrangling",
@@ -116,6 +104,18 @@
     "crumbs": [
       "Home",
       "Wrangling"
+    ]
+  },
+  {
+    "objectID": "visualization-basics.html",
+    "href": "visualization-basics.html",
+    "title": "Building a Graph in ggplot2",
+    "section": "",
+    "text": "Building a Graph in ggplot2\n\n\n\nPackages that we will use:\n\nlibrary(ggplot2)\nlibrary(bcscr)    # for m111survey data\n\n\n\n\n\nHere is our target graph. Let’s build it, step by step.\n\n\n\n\nFirst, set up the frame.\nggplot(m111survey, aes(x = fastest, y = GPA))\n\n\n\n\nNext, the glyphs.\nggplot(m111survey, aes(x = fastest, y = GPA)) +\n  geom_point()\n\n\n\n\nYou can include ane or more aesthetic mappings for the glyph.\nggplot(m111survey, aes(x = fastest, y = GPA)) +\n  geom_point(aes(color = sex))\n\n\n\n\nNow think about the labels.\nggplot(m111survey, aes(x = fastest, y = GPA)) +\n  geom_point(aes(color = sex)) +\n  labs(\n    x = \"fastest speed ever driven (mph)\",\n    y = \"grade-point average\",\n    title = \"Not much overall relationship between speed and GPA!\",\n    subtitle = \"(the fellers seem to drive faster and have lower GPAs)\"\n  )\n\n\n\n\nLabel for the x-axis:\nx = \"fastest speed ever driven (mph)\"\n\n\n\n\n\n\n\n\n\nLabel for the y-axis:\n y = \"grade-point average\"\n\n\n\n\n\n\n\n\n\nTitle and subtitle:\ntitle = \"Not much overall relationship between speed and GPA!\",\nsubtitle = \"(the fellers seem to drive faster and have lower GPAs)\"\n\n\n\n\n\n\n\n\n\nAnd there you have it!",
+    "crumbs": [
+      "Home",
+      "Visualization",
+      "Building a Graph in ggplot2"
     ]
   }
 ]
