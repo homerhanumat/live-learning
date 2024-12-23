@@ -84,15 +84,15 @@
     "text": "TODO"
   },
   {
-    "objectID": "visualization.html",
-    "href": "visualization.html",
-    "title": "Visualizing with {ggplot2}",
+    "objectID": "visualization-basics.html",
+    "href": "visualization-basics.html",
+    "title": "Building a Graph in ggplot2",
     "section": "",
-    "text": "TODO",
+    "text": "Building a Graph in ggplot2\n\n\n\nPackages that we will use:\n\nlibrary(ggplot2)\nlibrary(bcscr)    # for m111survey data\n\n\n\n\n\nHere is our target graph. Let’s build it, step by step.\n\n\n\n\nFirst, set up the frame.\nggplot(m111survey, aes(x = fastest, y = GPA))\n\n\n\n\nNext, the glyphs.\nggplot(m111survey, aes(x = fastest, y = GPA)) +\n  geom_point()\n\n\n\n\nYou can include ane or more aesthetic mappings for the glyph.\nggplot(m111survey, aes(x = fastest, y = GPA)) +\n  geom_point(aes(color = sex))\n\n\n\n\nNow think about the labels.\nggplot(m111survey, aes(x = fastest, y = GPA)) +\n  geom_point(aes(color = sex)) +\n  labs(\n    x = \"fastest speed ever driven (mph)\",\n    y = \"grade-point average\",\n    title = \"Not much overall relationship between speed and GPA!\",\n    subtitle = \"(the fellers seem to drive faster and have lower GPAs)\"\n  )\n\n\n\n\nLabel for the x-axis:\nx = \"fastest speed ever driven (mph)\"\nInclude units (like “mph”) whenever possible!\n\n\n\n\n\n\n\n\n\nLabel for the y-axis:\n y = \"grade-point average\"\n\n\n\n\n\n\n\n\n\nTitle and subtitle:\ntitle = \"Not much overall relationship between speed and GPA!\",\nsubtitle = \"(the fellers seem to drive faster and have lower GPAs)\"\nPro Tip: The title should point out an important lesson conveyed by the plot.\n\n\n\n\n\n\n\n\n\nWorking in Quarto? Make a caption!\n```{r}\n#| fig-cap: \"Scatterplot of GPA vs. fastest speed driven, for MAT 111 students.\"\nggplot(m111survey, aes(x = fastest, y = GPA)) +\n  geom_point(aes(color = sex)) +\n  labs(\n    x = \"fastest speed ever driven (mph)\",\n    y = \"grade-point average\",\n    title = \"Not much overall relationship between speed and GPA!\",\n    subtitle = \"(the fellers seem to drive faster and have lower GPAs)\"\n  )\n```\nPro Tip: Unlike the title, the caption is neutral as to any information conveyed by the plot, but may provide additional context (in this case, the source of the data).\n\n\n\n\n\n\n\n\n\n\n\nScatterplot of GPA vs. fastest speed driven, for MAT 111 students.",
     "crumbs": [
       "Home",
       "Visualization",
-      "Visualizing with {ggplot2}"
+      "Building a Graph in ggplot2"
     ]
   },
   {
@@ -104,18 +104,6 @@
     "crumbs": [
       "Home",
       "Wrangling"
-    ]
-  },
-  {
-    "objectID": "visualization-basics.html",
-    "href": "visualization-basics.html",
-    "title": "Building a Graph in ggplot2",
-    "section": "",
-    "text": "Building a Graph in ggplot2\n\n\n\nPackages that we will use:\n\nlibrary(ggplot2)\nlibrary(bcscr)    # for m111survey data\n\n\n\n\n\nHere is our target graph. Let’s build it, step by step.\n\n\n\n\nFirst, set up the frame.\nggplot(m111survey, aes(x = fastest, y = GPA))\n\n\n\n\nNext, the glyphs.\nggplot(m111survey, aes(x = fastest, y = GPA)) +\n  geom_point()\n\n\n\n\nYou can include ane or more aesthetic mappings for the glyph.\nggplot(m111survey, aes(x = fastest, y = GPA)) +\n  geom_point(aes(color = sex))\n\n\n\n\nNow think about the labels.\nggplot(m111survey, aes(x = fastest, y = GPA)) +\n  geom_point(aes(color = sex)) +\n  labs(\n    x = \"fastest speed ever driven (mph)\",\n    y = \"grade-point average\",\n    title = \"Not much overall relationship between speed and GPA!\",\n    subtitle = \"(the fellers seem to drive faster and have lower GPAs)\"\n  )\n\n\n\n\nLabel for the x-axis:\nx = \"fastest speed ever driven (mph)\"\n\n\n\n\n\n\n\n\n\nLabel for the y-axis:\n y = \"grade-point average\"\n\n\n\n\n\n\n\n\n\nTitle and subtitle:\ntitle = \"Not much overall relationship between speed and GPA!\",\nsubtitle = \"(the fellers seem to drive faster and have lower GPAs)\"\n\n\n\n\n\n\n\n\n\nAnd there you have it!",
-    "crumbs": [
-      "Home",
-      "Visualization",
-      "Building a Graph in ggplot2"
     ]
   }
 ]

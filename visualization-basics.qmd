@@ -14,8 +14,7 @@ format:
       narrative-background-color-overlay: "#111111dd"
       narrative-background-color-sidebar: "#111111"
       section-background-color: white
-website:
-  sidebar: false
+sidebar: false
 ---
 
 ```{=html}
@@ -65,7 +64,21 @@ library(bcscr)    # for m111survey data
 ```
 :::
 
-Here is our target graph.  Let's build it, step by step. @cr-mygraph
+::: {#cr-mygraph-caption .scale-to-fill}
+```{r}
+#| fig-cap: "Scatterplot of GPA vs. fastest speed driven, for MAT 111 students."
+ggplot(m111survey, aes(x = fastest, y = GPA)) +
+  geom_point(aes(color = sex)) +
+  labs(
+    x = "fastest speed ever driven (mph)",
+    y = "grade-point average",
+    title = "Not much overall relationship between speed and GPA!",
+    subtitle = "(the fellers seem to drive faster and have lower GPAs)"
+  )
+```
+:::
+
+Here is our target graph.  Let's build it, step by step. @cr-mygraph-caption
 
 
 
@@ -167,6 +180,8 @@ Label for the x-axis:
 ```r
 x = "fastest speed ever driven (mph)"
 ```
+
+Include units (like "mph") whenever possible!
 :::
 
 @cr-mygraph
@@ -189,12 +204,33 @@ Title and subtitle:
 title = "Not much overall relationship between speed and GPA!",
 subtitle = "(the fellers seem to drive faster and have lower GPAs)"
 ```
+**Pro Tip**:  The title should point out an important lesson conveyed by the plot.
 :::
+
+
 
 
 @cr-mygraph
 
-And there you have it!
+:::{focus-on="cr-mygraph-caption" .scale-to-fill}
+Working in Quarto?  Make a caption!
+
+
+```{{r}}
+#| fig-cap: "Scatterplot of GPA vs. fastest speed driven, for MAT 111 students."
+ggplot(m111survey, aes(x = fastest, y = GPA)) +
+  geom_point(aes(color = sex)) +
+  labs(
+    x = "fastest speed ever driven (mph)",
+    y = "grade-point average",
+    title = "Not much overall relationship between speed and GPA!",
+    subtitle = "(the fellers seem to drive faster and have lower GPAs)"
+  )
+```
+
+**Pro Tip**:  Unlike the title, the caption is neutral as to any information conveyed by the plot, but may provide additional context (in this case, the source of the data).
+
+:::
 
 :::
 
